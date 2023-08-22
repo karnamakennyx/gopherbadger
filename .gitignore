@@ -7,3 +7,4 @@ gopherbadger
 tmp
 coverage_test.md
 test_badge.*
+*.swp

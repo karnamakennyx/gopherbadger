@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jpoles1/gopherbadger/coverbadge"
-	"github.com/jpoles1/gopherbadger/logging"
+	"github.com/karnamakennyx/gopherbadger/coverbadge"
+	"github.com/karnamakennyx/gopherbadger/logging"
 
 	"github.com/fatih/color"
 )
@@ -83,6 +83,7 @@ type gopherBadgerConfig struct {
 	tagsFlag            string
 	shortFlag           bool
 	silentFlag          bool
+	badgeFileFlag       string
 }
 
 var badgeStyles = []string{"plastic", "flat", "flat-square", "for-the-badge", "social"}
@@ -98,6 +99,7 @@ func main() {
 	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
 	shortFlag := flag.Bool("short", false, "It will skip tests marked as testing.Short()")
 	silentFlag := flag.Bool("silent", false, "Do not output anything unless errors are encountered")
+	badgeFileFlag := flag.String("badgefile", "coverage_badge.png", "badge file output name")
 	flag.Parse()
 	config := gopherBadgerConfig{
 		badgeOutputFlag:     *badgeOutputFlag,
@@ -110,6 +112,7 @@ func main() {
 		tagsFlag:            *tagsFlag,
 		shortFlag:           *shortFlag,
 		silentFlag:          *silentFlag,
+		badgeFileFlag:       *badgeFileFlag,
 	}
 	badger(config)
 }
@@ -150,7 +153,7 @@ func badger(config gopherBadgerConfig) {
 		coverageFloat = config.manualCoverageFlag
 	}
 	if config.badgeOutputFlag {
-		coverageBadge.DownloadBadge("coverage_badge.png", coverageFloat)
+		coverageBadge.DownloadBadge(config.badgeFileFlag, coverageFloat)
 	}
 	if config.updateMdFilesFlag != "" {
 		for _, filepath := range strings.Split(config.updateMdFilesFlag, ",") {

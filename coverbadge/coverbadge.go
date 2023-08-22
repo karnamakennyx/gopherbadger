@@ -2,12 +2,13 @@ package coverbadge
 
 import (
 	"fmt"
-	"github.com/jpoles1/gopherbadger/logging"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"regexp"
+
+	"github.com/karnamakennyx/gopherbadger/logging"
 )
 
 type Badge struct {
